@@ -1,1 +1,0 @@
-/home/ruk/docker_task/nginx/sites-available/site.ru
