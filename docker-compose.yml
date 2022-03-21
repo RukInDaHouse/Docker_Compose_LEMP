@@ -17,7 +17,7 @@ services:
     container_name: wordpress
     image: wordpress:php7.4-apache
     volumes:
-      - ./data/html:/var/www/html
+      - ./data/site.ru:/var/www/site.ru
     depends_on:
       - mysql
     environment:
@@ -41,7 +41,7 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/sites-available:/etc/nginx/sites-available
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled          
-      - ./data/html:/var/www/html
+      - ./data/site.ru:/var/www/site.ru
       - ./var/log/nginx:/var/log/nginx
     ports:
       - 80:80
