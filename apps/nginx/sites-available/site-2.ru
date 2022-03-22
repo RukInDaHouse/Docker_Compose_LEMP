@@ -6,8 +6,8 @@ server {
   server_name site-2.ru www.site-2.ru;
   index index.php;
 
-  access_log /var/log/nginx/site-access.log;
-  error_log /var/log/nginx/site-error.log;
+  access_log /var/www/site-2.ru/log/nginx/site-access.log;
+  error_log /var/www/site-2.ru/log/nginx/site-access.log;
   
     location ~ ^/\.user\.ini {
         deny all;
@@ -27,8 +27,12 @@ server {
         access_log off;
     }
     
+    location ~* ^/phpmyadmin {
+	return 301 $scheme://site-2.ru:8081;
+    }
+    
     location ~* ^.+\.(css|jpg|jpeg|gif|png|ico|zip|tgz|gz|rar|bz2|doc|xls|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|swf)$ {
-        root /var/www/DOMAIN_NAME/data;
+        root /var/www/site-2.ru;
         expires max;
         access_log   off;
     }
@@ -55,7 +59,7 @@ server {
         proxy_busy_buffers_size	64k;
         proxy_temp_file_write_size 64k;
         
-        proxy_pass http://wordpress;
+        proxy_pass http://apache;
     }
 
     location ~[^?]*/$ {
@@ -76,7 +80,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header Host $host;
         
-        proxy_pass http://wordpress;
+        proxy_pass http://apache;
     }
 
     location ~ \.php$ {
@@ -97,6 +101,6 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header Host $host;
         
-        proxy_pass http://wordpress;
+        proxy_pass http://apache;
     }
 }
